@@ -61,10 +61,11 @@ EOT
   validation {
     condition = alltrue([
       for k, v in var.servicehook_storage_queue_pipelines : (
-        length(v.account_key) >= 64 && length(v.account_key) <= 100
+        length(v.account_key) <= 100
       )
     ])
-    error_message = "must be between 64 and 100 characters"
+    error_message = "must be at most 100 characters"
   }
+  # Note: 1 additional provider-side validator is enforced at apply time but not mirrored as validation{} blocks here (bespoke or non-mechanically-translatable).
 }
 
